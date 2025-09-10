@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">User PJS</string>
+
+    <!--    error message    -->
+    <string name="network_error_message">Periksa koneksi internet Anda.</string>
+    <string name="server_error_message">Terjadi kesalahan pada server. Coba lagi nanti.</string>
+    <string name="unknown_error_message">Terjadi masalah saat memproses data. Coba lagi.</string>
+
+    <!--    search    -->
+    <string name="unknown_user">User tidak ditemukan.</string>
+    <string name="search_hint">Search by Name</string>
+    <string name="search">Search</string>
+    <string name="more_options">More Options</string>
+    <string name="search_user">Search user</string>
+    <string name="clear_search">Clear Search</string>
+
+    <string name="try_again">Coba Lagi</string>
+    <string name="reload">Reload</string>
+
+</resources>
