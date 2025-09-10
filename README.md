@@ -40,7 +40,7 @@ You can search, sort (A–Z / Z–A), and view detailed information for each use
 
 ## How to Install the APK
 To quickly try the Griya Kuliner's Review App on your Android device:
-1. Download the latest APK release from [this link](https://github.com/nabilaakhairunnisa/pjsusers/raw/refs/heads/master/PJSUsers.apk).
+1. Download the latest APK release from [this link](https://github.com/nabilaakhairunnisa/pjsusers/raw/refs/heads/main/PJSUsers.apk).
 2. On your device, go to **Settings > Security** and enable **Install from Unknown Sources** (if not already enabled).
 3. Open the downloaded APK file.
 4. Tap **Install** and wait until the process is complete.
