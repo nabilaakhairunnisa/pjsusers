@@ -47,5 +47,3 @@ To quickly try the Griya Kuliner's Review App on your Android device:
 5. Once installed, open the app and enjoy!
 
 ---
-
-https://github.com/nabilaakhairunnisa/GriyaKulinersReview/raw/refs/heads/master/griya-kuliner-review.apk
