@@ -44,27 +44,4 @@ class UserRepositoryImpl(
         }
     }
 
-    // search
-    override fun searchUsers(query: String): Flow<ResultState<List<UsersItem>>> = flow {
-        emit(ResultState.Loading)
-        try {
-            val response = apiService.getUsers()
-            val filtered = response.users.filter { user ->
-                "${user.firstName} ${user.lastName}".contains(query, ignoreCase = true)
-            }
-            if (filtered.isEmpty()) {
-                emit(ResultState.Error(R.string.unknown_user))
-            } else {
-                emit(ResultState.Success(filtered))
-            }
-        } catch (e: Exception) {
-            val errorMessageId = when (e) {
-                is IOException -> R.string.network_error_message
-                is HttpException -> R.string.server_error_message
-                else -> R.string.unknown_error_message
-            }
-            emit(ResultState.Error(errorMessageId))
-        }
-    }
-
 }

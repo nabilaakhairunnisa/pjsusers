@@ -1,4 +1,4 @@
-package com.nabila.userpjs.ui.main
+package com.nabila.userpjs.ui.home
 
 // Compose & Material imports
 import androidx.compose.foundation.background
@@ -16,7 +16,7 @@ import com.nabila.userpjs.R
 
 // Project imports
 import com.nabila.userpjs.data.remote.model.UsersItem
-import org.koin.core.option.viewModelScopeFactory
+import com.nabila.userpjs.ui.viewmodel.HomeViewModel
 
 /**
  * MainScreen is the entry point for showing users list.
@@ -24,13 +24,12 @@ import org.koin.core.option.viewModelScopeFactory
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    viewModel: MainViewModel,
+fun HomeScreen(
+    viewModel: HomeViewModel,
     onCardClick: (UsersItem) -> Unit
 ) {
     val userState = viewModel.userState.collectAsStateWithLifecycle()
-    val searchQuery by viewModel.searchQuery
-
+    val searchQuery by viewModel.search.collectAsStateWithLifecycle()
     var expanded by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -71,10 +70,15 @@ fun MainScreen(
 
         MainScreenContent(
             state = userState.value,
+            // give the text field value
             searchQuery = searchQuery,
-            onSearchChanged = { query -> viewModel.onSearchQueryChanged(query) },
-            onClearSearch = { viewModel.onSearchQueryChanged("") },
+            // when user typing
+            onSearchChanged = { query -> viewModel.search(query) },
+            // when x icon on search bar clicked
+            onClearSearch = { viewModel.search("") },
+            // when retry button on error view clicked
             onRetry = { viewModel.getUsers() },
+            // when card on list user clicked
             onCardClick = onCardClick,
             modifier = Modifier.padding(innerPadding)
         )

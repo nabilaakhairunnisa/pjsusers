@@ -7,13 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.nabila.userpjs.ui.navigation.AppNavGraph
-import com.nabila.userpjs.ui.main.MainViewModel
+import com.nabila.userpjs.ui.viewmodel.HomeViewModel
 import com.nabila.userpjs.ui.theme.UserPJSTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val mainViewModel: MainViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             UserPJSTheme {
-                AppNavGraph(mainViewModel = mainViewModel, modifier = Modifier.fillMaxSize())
+                AppNavGraph(homeViewModel = homeViewModel, modifier = Modifier.fillMaxSize())
             }
         }
     }

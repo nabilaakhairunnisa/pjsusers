@@ -1,4 +1,4 @@
-package com.nabila.userpjs.ui.main
+package com.nabila.userpjs.ui.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
