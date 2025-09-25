@@ -49,7 +49,11 @@ class UserRepositoryImpl(
         emit(ResultState.Loading)
         try {
             val user = apiService.searchUsers(query)
-            emit(ResultState.Success(user.users))
+            if (user.users.isEmpty()) {
+                emit(ResultState.Error(R.string.unknown_user))
+            } else {
+                emit(ResultState.Success(user.users))
+            }
         } catch (e: Exception) {
             val errorMessageId = when (e) {
                 is IOException -> R.string.network_error_message
@@ -60,7 +64,18 @@ class UserRepositoryImpl(
         }
     }
 
-    override fun sortUsers(sortBy: String, orderBy: String): Flow<ResultState<List<UsersItem>>> {
-        TODO("Not yet implemented")
+    override fun sortUsers(orderBy: String): Flow<ResultState<List<UsersItem>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.sortUsers(orderBy = orderBy)
+            emit(ResultState.Success(response.users))
+        } catch (e: Exception) {
+            val errorMessageId = when (e) {
+                is IOException -> R.string.network_error_message
+                is HttpException -> R.string.server_error_message
+                else -> R.string.unknown_error_message
+            }
+            emit(ResultState.Error(errorMessageId))
+        }
     }
 }

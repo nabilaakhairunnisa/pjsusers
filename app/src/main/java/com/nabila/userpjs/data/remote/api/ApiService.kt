@@ -21,7 +21,7 @@ interface ApiService {
     // sort
     @GET("users/search")
     suspend fun sortUsers(
-        @Query("sortBy") sortBy: String,
+        @Query("sortBy") sortBy: String = "firstName",
         @Query("order") orderBy: String
     ): ResponseUser
 }
