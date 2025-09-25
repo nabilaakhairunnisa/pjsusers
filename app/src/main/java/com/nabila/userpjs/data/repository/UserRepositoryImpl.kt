@@ -49,7 +49,11 @@ class UserRepositoryImpl(
         emit(ResultState.Loading)
         try {
             val user = apiService.searchUsers(query)
-            emit(ResultState.Success(user.users))
+            if (user.users.isEmpty()) {
+                emit(ResultState.Error(R.string.unknown_user))
+            } else {
+                emit(ResultState.Success(user.users))
+            }
         } catch (e: Exception) {
             val errorMessageId = when (e) {
                 is IOException -> R.string.network_error_message
