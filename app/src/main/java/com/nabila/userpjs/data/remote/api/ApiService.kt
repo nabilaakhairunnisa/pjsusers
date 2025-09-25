@@ -18,4 +18,10 @@ interface ApiService {
     @GET("users/search")
     suspend fun searchUsers(@Query("q") query: String): ResponseUser
 
+    // sort
+    @GET("users/search")
+    suspend fun sortUsers(
+        @Query("sortBy") sortBy: String,
+        @Query("order") orderBy: String
+    ): ResponseUser
 }

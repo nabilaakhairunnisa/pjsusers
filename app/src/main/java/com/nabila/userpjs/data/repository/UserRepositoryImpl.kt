@@ -59,4 +59,8 @@ class UserRepositoryImpl(
             emit(ResultState.Error(errorMessageId))
         }
     }
+
+    override fun sortUsers(sortBy: String, orderBy: String): Flow<ResultState<List<UsersItem>>> {
+        TODO("Not yet implemented")
+    }
 }
