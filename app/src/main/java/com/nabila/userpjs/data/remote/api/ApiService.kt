@@ -4,6 +4,7 @@ import com.nabila.userpjs.data.remote.model.ResponseUser
 import com.nabila.userpjs.data.remote.model.UsersItem
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface ApiService {
@@ -13,5 +14,8 @@ interface ApiService {
 
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Int): UsersItem
+
+    @GET("users/search")
+    suspend fun searchUsers(@Query("q") query: String): ResponseUser
 
 }

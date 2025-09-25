@@ -37,30 +37,19 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
+    // search users
+    private fun searchUsers(query: String) {
+        viewModelScope.launch {
+            repository.searchUsers(query).collect { result ->
+                _userState.value = result
+            }
+        }
+    }
+
     // save typed text
     fun search(query: String) {
         _search.value = query
-        searchByName(query)
-    }
-
-    private fun searchByName(query: String) {
-        // if search blank, show all users
-        if (query.isBlank()) {
-            _userState.value = ResultState.Success(originalList.value)
-            return
-        }
-
-        // filter full name by query
-        val filteredUsers = originalList.value.filter { user ->
-            "${user.firstName} ${user.lastName}".contains(query, ignoreCase = true)
-                    || user.company.title.contains(query, ignoreCase = true)
-        }
-
-        if (filteredUsers.isEmpty()) {
-            _userState.value = ResultState.Error(R.string.unknown_user)
-        } else {
-            _userState.value = ResultState.Success(filteredUsers)
-        }
+        searchUsers(query)
     }
 
     // sort
@@ -69,20 +58,6 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
             originalList.value.sortedBy { "${it.firstName} ${it.lastName}" }
         } else {
             originalList.value.sortedByDescending { "${it.firstName} ${it.lastName}" }
-        }
-        _userState.value = ResultState.Success(sorted)
-    }
-
-    // sort
-    fun sortByAge(ascending: Boolean) {
-        val sorted = if (ascending) {
-            originalList.value.sortedBy { user ->
-                user.age
-            }
-        } else {
-            originalList.value.sortedByDescending { user ->
-                user.age
-            }
         }
         _userState.value = ResultState.Success(sorted)
     }
