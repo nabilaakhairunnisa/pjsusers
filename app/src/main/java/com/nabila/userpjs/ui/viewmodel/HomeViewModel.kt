@@ -40,6 +40,12 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
+    // save typed text
+    fun search(query: String) {
+        _search.value = query
+        searchUsers(query)
+    }
+
     // sort
     fun sortByName(ascending: Boolean) {
         viewModelScope.launch {
@@ -49,11 +55,4 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
             }
         }
     }
-
-    // save typed text
-    fun search(query: String) {
-        _search.value = query
-        searchUsers(query)
-    }
-
 }
