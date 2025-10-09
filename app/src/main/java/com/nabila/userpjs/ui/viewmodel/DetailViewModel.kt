@@ -1,4 +1,4 @@
-package com.nabila.userpjs.ui.detail
+package com.nabila.userpjs.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

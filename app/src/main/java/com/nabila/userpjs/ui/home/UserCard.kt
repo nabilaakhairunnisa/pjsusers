@@ -1,4 +1,4 @@
-package com.nabila.userpjs.ui.main
+package com.nabila.userpjs.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

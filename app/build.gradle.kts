@@ -64,10 +64,10 @@ dependencies {
     //kotlin coroutine (flow)
     implementation(libs.kotlinx.coroutines.core)
 
-    // Coil (image loader)
+    //coil (image loader)
     implementation(libs.coil.compose)
 
-    // navigation compose
+    //navigation compose
     implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)

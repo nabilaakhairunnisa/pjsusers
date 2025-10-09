@@ -44,18 +44,15 @@ class UserRepositoryImpl(
         }
     }
 
-    // search
+    // search users
     override fun searchUsers(query: String): Flow<ResultState<List<UsersItem>>> = flow {
         emit(ResultState.Loading)
         try {
-            val response = apiService.getUsers()
-            val filtered = response.users.filter { user ->
-                "${user.firstName} ${user.lastName}".contains(query, ignoreCase = true)
-            }
-            if (filtered.isEmpty()) {
+            val user = apiService.searchUsers(query)
+            if (user.users.isEmpty()) {
                 emit(ResultState.Error(R.string.unknown_user))
             } else {
-                emit(ResultState.Success(filtered))
+                emit(ResultState.Success(user.users))
             }
         } catch (e: Exception) {
             val errorMessageId = when (e) {
@@ -66,5 +63,4 @@ class UserRepositoryImpl(
             emit(ResultState.Error(errorMessageId))
         }
     }
-
 }

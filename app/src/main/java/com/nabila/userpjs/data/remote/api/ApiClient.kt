@@ -6,8 +6,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.nabila.userpjs.data.repository.UserRepositoryImpl
-import com.nabila.userpjs.ui.detail.DetailViewModel
-import com.nabila.userpjs.ui.main.MainViewModel
+import com.nabila.userpjs.ui.viewmodel.DetailViewModel
+import com.nabila.userpjs.ui.viewmodel.HomeViewModel
 
 val appModule = module {
     single {
@@ -23,7 +23,7 @@ val appModule = module {
 
     single<UserRepository> { UserRepositoryImpl(get()) }
 
-    viewModel { MainViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
     viewModel { DetailViewModel(get()) }
 
 }

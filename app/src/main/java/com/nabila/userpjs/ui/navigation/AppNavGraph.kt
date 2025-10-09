@@ -8,14 +8,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.nabila.userpjs.ui.detail.DetailScreen
-import com.nabila.userpjs.ui.detail.DetailViewModel
-import com.nabila.userpjs.ui.main.MainScreen
-import com.nabila.userpjs.ui.main.MainViewModel
+import com.nabila.userpjs.ui.viewmodel.DetailViewModel
+import com.nabila.userpjs.ui.home.HomeScreen
+import com.nabila.userpjs.ui.viewmodel.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun AppNavGraph(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun AppNavGraph(homeViewModel: HomeViewModel, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
 
     NavHost(
@@ -26,7 +26,7 @@ fun AppNavGraph(mainViewModel: MainViewModel, modifier: Modifier = Modifier) {
 
         // List Screen
         composable("user_list") {
-            MainScreen(viewModel = mainViewModel, onCardClick = { user ->
+            HomeScreen(viewModel = homeViewModel, onCardClick = { user ->
                 navController.navigate("user_detail/${user.id}")
             })
         }

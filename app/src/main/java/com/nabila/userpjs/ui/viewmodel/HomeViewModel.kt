@@ -1,8 +1,8 @@
-package com.nabila.userpjs.ui.main
+package com.nabila.userpjs.ui.viewmodel
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nabila.userpjs.R
 import com.nabila.userpjs.data.remote.model.UsersItem
 import com.nabila.userpjs.data.repository.ResultState
 import com.nabila.userpjs.data.repository.UserRepository
@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel(private val repository: UserRepository): ViewModel() {
+class HomeViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _userState = MutableStateFlow<ResultState<List<UsersItem>>>(ResultState.Loading)
     val userState: StateFlow<ResultState<List<UsersItem>>> = _userState
 
-    private var originalList: List<UsersItem> = emptyList()
+    private val originalList = MutableStateFlow<List<UsersItem>>(emptyList())
 
-    var searchQuery = mutableStateOf("")
-        private set
+    private val _search = MutableStateFlow("")
+    val search: StateFlow<String> = _search
 
     init {
         getUsers()
@@ -30,32 +30,34 @@ class MainViewModel(private val repository: UserRepository): ViewModel() {
             repository.getUsers().collect { result ->
                 if (result is ResultState.Success) {
                     // save original data
-                    originalList = result.data
+                    originalList.value = result.data
                 }
                 _userState.value = result
             }
         }
     }
 
-    // search
-    fun onSearchQueryChanged(query: String) {
-        searchQuery.value = query
+    // search users
+    private fun searchUsers(query: String) {
         viewModelScope.launch {
             repository.searchUsers(query).collect { result ->
-                if (result is ResultState.Success) {
-                    originalList = result.data
-                }
                 _userState.value = result
             }
         }
+    }
+
+    // save typed text
+    fun search(query: String) {
+        _search.value = query
+        searchUsers(query)
     }
 
     // sort
     fun sortByName(ascending: Boolean) {
         val sorted = if (ascending) {
-            originalList.sortedBy { "${it.firstName} ${it.lastName}" }
+            originalList.value.sortedBy { "${it.firstName} ${it.lastName}" }
         } else {
-            originalList.sortedByDescending { "${it.firstName} ${it.lastName}" }
+            originalList.value.sortedByDescending { "${it.firstName} ${it.lastName}" }
         }
         _userState.value = ResultState.Success(sorted)
     }

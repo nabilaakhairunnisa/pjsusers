@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 // Project imports
-import com.nabila.userpjs.data.repository.ResultState
+import com.nabila.userpjs.ui.viewmodel.DetailViewModel
 
 /**
  * DetailScreen shows user details inside a Scaffold.
