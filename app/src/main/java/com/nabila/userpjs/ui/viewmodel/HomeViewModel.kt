@@ -15,8 +15,6 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
     private val _userState = MutableStateFlow<ResultState<List<UsersItem>>>(ResultState.Loading)
     val userState: StateFlow<ResultState<List<UsersItem>>> = _userState
 
-    private val originalList = MutableStateFlow<List<UsersItem>>(emptyList())
-
     private val _search = MutableStateFlow("")
     val search: StateFlow<String> = _search
 
@@ -28,10 +26,6 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
     fun getUsers() {
         viewModelScope.launch {
             repository.getUsers().collect { result ->
-                if (result is ResultState.Success) {
-                    // save original data
-                    originalList.value = result.data
-                }
                 _userState.value = result
             }
         }
@@ -54,12 +48,11 @@ class HomeViewModel(private val repository: UserRepository): ViewModel() {
 
     // sort
     fun sortByName(ascending: Boolean) {
-        val sorted = if (ascending) {
-            originalList.value.sortedBy { "${it.firstName} ${it.lastName}" }
-        } else {
-            originalList.value.sortedByDescending { "${it.firstName} ${it.lastName}" }
+        viewModelScope.launch {
+            val orderBy = if (ascending) "asc" else "desc"
+            repository.sortUsers(orderBy = orderBy).collect { sortedUsers ->
+                _userState.value = sortedUsers
+            }
         }
-        _userState.value = ResultState.Success(sorted)
     }
-
 }

@@ -63,4 +63,20 @@ class UserRepositoryImpl(
             emit(ResultState.Error(errorMessageId))
         }
     }
+
+    //sort
+    override fun sortUsers(orderBy: String): Flow<ResultState<List<UsersItem>>> = flow {
+        emit(ResultState.Loading)
+        try {
+            val response = apiService.sortUsers(orderBy = orderBy)
+            emit(ResultState.Success(response.users))
+        } catch (e: Exception) {
+            val errorMessageId = when (e) {
+                is IOException -> R.string.network_error_message
+                is HttpException -> R.string.server_error_message
+                else -> R.string.unknown_error_message
+            }
+            emit(ResultState.Error(errorMessageId))
+        }
+    }
 }
